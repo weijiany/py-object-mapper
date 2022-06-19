@@ -49,9 +49,19 @@ class Mapper:
             elif type(value_of_from) not in self.primitive_types:
                 if isinstance(value_of_from, list):
                     value_of_from = self.__mapper_list(value_of_from)
+                elif isinstance(value_of_from, dict):
+                    value_of_from = self.__mapper_dict(value_of_from) or value_of_from
                 else:
                     value_of_from = self.map(value_of_from, self.NONE_TYPE)
             result[prop] = value_of_from
+        return result
+
+    def __mapper_dict(self, value_of_from) -> Dict[str, Optional[_TT]]:
+        result: Dict[str, Optional[_TT]] = {}
+        for key, val in value_of_from.items():
+            if type(val) in self.mappings:
+                to_model = self.map(val, self.NONE_TYPE)
+                result[key] = to_model
         return result
 
     def __mapper_list(self, value_of_from) -> List[Optional[_TT]]:

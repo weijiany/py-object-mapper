@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
 
 from tests.utils.nest_B import NestB
 
@@ -12,4 +12,6 @@ class ClassB:
     custom_map_val: str
     primitive_list: List[int]
     nest_list: List[NestB]
+    primitive_dict: Dict[str, str]
+    nest_dict: Dict[str, NestB]
     default_val: int = 10
