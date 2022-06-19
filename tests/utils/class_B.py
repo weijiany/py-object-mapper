@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Dict
 
+from tests.utils.color import Color
 from tests.utils.nest_B import NestB
 
 
@@ -14,4 +15,5 @@ class ClassB:
     nest_list: List[NestB]
     primitive_dict: Dict[str, str]
     nest_dict: Dict[str, NestB]
+    color: Color
     default_val: int = 10

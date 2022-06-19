@@ -1,5 +1,6 @@
 import inspect
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import TypeVar, Type, Callable, Dict, Any, List, Tuple
 
 from py_object_mapper import inspection
@@ -44,6 +45,8 @@ class Mapper:
 
             if prop in custom_mapping:
                 value_of_from = custom_mapping[prop](from_obj)
+            elif isinstance(parameter.annotation, type(Enum)):
+                value_of_from = getattr(parameter.annotation, value_of_from.upper())
             elif value_of_from is None:
                 value_of_from = parameter.default
             elif type(value_of_from) not in self.primitive_types:
@@ -86,4 +89,3 @@ def register_map(from_type: Type[_FT], to_type: Type[_TT], custom_mapping: Dict[
 
 
 __all__ = ["map_obj", "register_map"]
-

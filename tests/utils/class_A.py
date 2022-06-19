@@ -14,3 +14,4 @@ class ClassA:
     nest_list: List[NestA]
     primitive_dict: Dict[str, str]
     nest_dict: Dict[str, NestA]
+    color: str

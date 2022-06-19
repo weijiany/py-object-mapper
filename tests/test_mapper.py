@@ -1,6 +1,7 @@
 from py_object_mapper.mapper import register_map, map_obj
 from tests.utils.class_A import ClassA
 from tests.utils.class_B import ClassB
+from tests.utils.color import Color
 from tests.utils.nest_A import NestA
 from tests.utils.nest_B import NestB
 
@@ -16,7 +17,8 @@ class TestMapper:
             primitive_list=[1, 2, 3],
             nest_list=[nest_a],
             primitive_dict={"key": "val"},
-            nest_dict={"key": nest_a})
+            nest_dict={"key": nest_a},
+            color="red")
 
     def test_should_map_obj_with_unmap_key_in_to_obj(self):
         register_map(ClassA, ClassB)
@@ -66,3 +68,9 @@ class TestMapper:
         to_obj = map_obj(self.from_obj, ClassB)
 
         assert to_obj.nest_dict["key"].tag == self.from_obj.nest_dict["key"].tag
+
+    def test_should_map_enum(self):
+        register_map(ClassA, ClassB)
+        to_obj = map_obj(self.from_obj, ClassB)
+
+        assert to_obj.color == Color.RED
