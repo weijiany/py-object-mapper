@@ -8,4 +8,5 @@ class ClassB:
 
     mandatory_val: str
     nest_val: NestB
+    custom_map_val: str
     default_val: int = 10

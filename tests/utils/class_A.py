@@ -8,3 +8,4 @@ class ClassA:
 
     mandatory_val: str
     nest_val: NestA
+    custom_map_val: str
