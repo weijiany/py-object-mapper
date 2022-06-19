@@ -1,6 +1,6 @@
 import inspect
 from dataclasses import dataclass, field
-from typing import TypeVar, Type, Callable, Dict, Any, List, Tuple
+from typing import TypeVar, Type, Callable, Dict, Any, List, Tuple, Optional
 
 from py_object_mapper import inspection
 
@@ -47,9 +47,21 @@ class Mapper:
             elif value_of_from is None:
                 value_of_from = parameter.default
             elif type(value_of_from) not in self.primitive_types:
-                value_of_from = self.map(value_of_from, self.NONE_TYPE)
+                if isinstance(value_of_from, list):
+                    value_of_from = self.__mapper_list(value_of_from)
+                else:
+                    value_of_from = self.map(value_of_from, self.NONE_TYPE)
             result[prop] = value_of_from
         return result
+
+    def __mapper_list(self, value_of_from) -> List[Optional[_TT]]:
+        temp_list: List[Optional[_TT]] = []
+        for item in value_of_from:
+            if type(item) in self.primitive_types:
+                temp_list.append(item)
+            else:
+                temp_list.append(self.map(item, self.NONE_TYPE))
+        return temp_list
 
 
 mapper = Mapper()

@@ -8,7 +8,13 @@ from tests.utils.nest_B import NestB
 class TestMapper:
 
     def setup_method(self):
-        self.from_obj = ClassA("test", NestA("tag"), "custom_map_val")
+        nest_a = NestA("tag")
+        self.from_obj = ClassA(
+            "test",
+            nest_a,
+            "custom_map_val",
+            [1, 2, 3],
+            [nest_a])
 
     def test_should_map_obj_with_unmap_key_in_to_obj(self):
         register_map(ClassA, ClassB)
@@ -31,3 +37,17 @@ class TestMapper:
         to_obj = map_obj(self.from_obj, ClassB)
 
         assert to_obj.custom_map_val == self.from_obj.custom_map_val.upper()
+
+    def test_should_map_primitive_list(self):
+        register_map(ClassA, ClassB)
+        to_obj = map_obj(self.from_obj, ClassB)
+
+        assert to_obj.primitive_list == self.from_obj.primitive_list
+
+    def test_should_map_nest_list(self):
+        register_map(ClassA, ClassB)
+        register_map(NestA, NestB)
+        to_obj = map_obj(self.from_obj, ClassB)
+
+        assert len(to_obj.nest_list) == len(self.from_obj.nest_list)
+        assert to_obj.nest_list[0].tag == self.from_obj.nest_list[0].tag
