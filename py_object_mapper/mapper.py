@@ -86,6 +86,3 @@ def map_obj(from_obj: _FT, to_type: Type[_TT]) -> _TT:
 
 def register_map(from_type: Type[_FT], to_type: Type[_TT], custom_mapping: Dict[str, Callable[[_FT], Any]] = None):
     return mapper.add_map(from_type, to_type, custom_mapping)
-
-
-__all__ = ["map_obj", "register_map"]

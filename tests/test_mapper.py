@@ -1,4 +1,4 @@
-from py_object_mapper.mapper import register_map, map_obj
+from py_object_mapper import register_map, map_obj
 from tests.utils.class_A import ClassA
 from tests.utils.class_B import ClassB
 from tests.utils.color import Color
